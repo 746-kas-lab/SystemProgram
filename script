@@ -1,0 +1,24 @@
+#!/bin/bash
+echo 'Directory file search'
+echo 'This program will help you find the file in the current directory'
+echo 'Developer;Kulgavaya A.S'
+echo 'Current directory'
+pwd
+read -p 'Search file name' namefile
+while [ ! -e $namefile ]
+do
+	echo 'File not found'
+	read -p 'Search file name' namefile
+done
+if [ -s $namefile ] 
+then echo "$namefile found and contains information"
+else exit
+fi
+read -p ' Enter the check date ' filedate
+#if [ ["$(date -r $namefile +%s)" -gt "$(date --date=$filedate +%s)"] ]
+d1=$(date -r $namefile +%s)
+d2=$(date -d $filedate +%s)
+if [ "$d1" -gt "$d2" ]
+then echo "File $namefile has been modified after $filedate"
+else echo "No modifications for file $namefile after $filedate"
+fi
